@@ -1,0 +1,67 @@
+@import 'compass';
+@import 'variables';
+@import 'functions';
+//-------------------------------------------------------
+// CROSS-BROWSER MIXINS
+//-------------------------------------------------------
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  $opacity-ie: $opacity * 100;
+  filter: alpha(opacity=$opacity-ie); //IE8
+}
+//-------------------------------------------------------
+// TRANSITION MIXINS
+//-------------------------------------------------------
+@mixin transition($args...) {
+	-webkit-transition: $args;
+	-moz-transition: $args;
+	-ms-transition: $args;
+	-o-transition: $args;
+	transition: $args;
+}
+//-------------------------------------------------------
+// ANIMATION & KEYFRAME MIXINS
+//-------------------------------------------------------
+@mixin keyframes($name) {
+	@-webkit-keyframes #{$name} {
+		@content;
+	}
+	@-moz-keyframes #{$name} {
+		@content;
+	}
+	@-ms-keyframes #{$name} {
+		@content;
+	}
+	@-o-keyframes #{$name} {
+		@content;
+	}
+	@keyframes #{$name} {
+		@content;
+	}
+}
+@mixin animation($str) {
+	-webkit-animation: #{$str};
+	-moz-animation: #{$str};
+	-ms-animation: #{$str};
+	-o-animation: #{$str};
+	animation: #{$str};
+}
+//-------------------------------------------------------
+// FONT MIXINS
+//-------------------------------------------------------
+@mixin fontSize($size){
+	font-size: $size; // would be overridden if browser support REM
+	font-size: calculateRem($size, $font-base);
+}
+//-------------------------------------------------------
+// BUTTON MIXINS
+//-------------------------------------------------------
+// Mixin Button
+@mixin button($radius: 5px, $padding: 10px 20px){
+	border-radius: $radius;
+	padding: $padding;
+	outline: none;
+	cursor: pointer;
+}
+
+
