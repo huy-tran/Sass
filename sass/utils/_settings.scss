@@ -1,0 +1,17 @@
+@import "variables";
+html {
+	font-size: 62.5%; 
+}
+body {
+	width: 960px;
+	margin: 100px auto;
+}
+a {
+	text-decoration: none;
+}
+@each $h in h1,h2,h3,h4,h5,h6 {
+	#{$h} {
+		@include rem(font-size, $heading-base);
+		$heading-base: $heading-base - 1;
+	}
+}

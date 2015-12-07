@@ -1,12 +1,1 @@
 @import 'variables';
-
-//---------------------------------------------------------------------
-// Calculate rem font size for browser supports rem
-// @param {String} $size - element's font size
-// @param {String} $font-base - root's font size
-// @return {String} $remSize - element's font size in rem unit
-//---------------------------------------------------------------------
-@function calculateRem($size, $font-base) {
-	$remSize: $size / $font-base;
-	@return $remSize * 1rem;
-}

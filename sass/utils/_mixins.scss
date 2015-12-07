@@ -1,4 +1,5 @@
 @import 'compass';
+@import '../vendors/rem';
 @import 'variables';
 @import 'functions';
 //-------------------------------------------------------
@@ -26,42 +27,75 @@
 	@-webkit-keyframes #{$name} {
 		@content;
 	}
-	@-moz-keyframes #{$name} {
-		@content;
-	}
-	@-ms-keyframes #{$name} {
-		@content;
-	}
-	@-o-keyframes #{$name} {
-		@content;
-	}
+	// @-moz-keyframes #{$name} {
+	// 	@content;
+	// }
+	// @-ms-keyframes #{$name} {
+	// 	@content;
+	// }
+	// @-o-keyframes #{$name} {
+	// 	@content;
+	// }
 	@keyframes #{$name} {
 		@content;
 	}
 }
-@mixin animation($str) {
-	-webkit-animation: #{$str};
-	-moz-animation: #{$str};
-	-ms-animation: #{$str};
-	-o-animation: #{$str};
-	animation: #{$str};
-}
-//-------------------------------------------------------
-// FONT MIXINS
-//-------------------------------------------------------
-@mixin fontSize($size){
-	font-size: $size; // would be overridden if browser support REM
-	font-size: calculateRem($size, $font-base);
+@mixin prefix($prop, $str) {
+	-webkit-#{$prop}: #{$str};
+	-moz-#{$prop}: #{$str};
+	-ms-#{$prop}: #{$str};
+	-o-#{$prop}: #{$str};
+	#{$prop}: #{$str};
 }
 //-------------------------------------------------------
 // BUTTON MIXINS
 //-------------------------------------------------------
-// Mixin Button
-@mixin button($radius: 5px, $padding: 10px 20px){
-	border-radius: $radius;
-	padding: $padding;
-	outline: none;
-	cursor: pointer;
+@mixin button($color-btn, $outline: false) {
+	@include button-core($color-btn);
+	@include transition(.3s);
+	@if $outline {
+		&:hover {
+			@include button-fx-outline($color-btn);
+		}
+	}
 }
-
+	@mixin button-core($color-btn, $color: #fff, $radius: 3px){
+		@include rem(font-size, 2rem);
+		@include rem(padding, 1rem 2rem);
+		@include rem(margin, 1rem);
+		border-radius: $radius;
+		font-family: $font-body;
+		color: $color;
+		background: $color-btn;
+		text-decoration: none;
+		outline: none;
+		border: none;
+		cursor: pointer;
+		&:active {
+			background: $color-btn-active;
+		}
+	}
+	// Outline Button
+	@mixin button-fx-outline($color) {
+		box-shadow: 0 0 0 2px $color-bg, 0 0 0 4px $color;	
+	}
+	// Scale Button
+	@include keyframes(btnFxScale) {
+		from, to {
+			-webkit-transform: scale(1, 1);
+			transform: scale(1, 1);
+		}
+		25% {
+			-webkit-transform: scale(.9, 1.1);
+			transform: scale(.9, 1.1);
+		}
+		50% {
+			-webkit-transform: scale(1.1, .9);
+			transform: scale(1.1, .9);
+		}
+		75% {
+			-webkit-transform: scale(.95, 1.05);
+			transform: scale(.95, 1.05);
+		}
+	}
 

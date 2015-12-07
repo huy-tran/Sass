@@ -2,8 +2,19 @@
 @import '../utils/variables';
 @import '../utils/mixins';
 @import '../utils/helpers';
+@import '../utils/functions';
 
-.me-btn {
-	@include button;
-	font-size: 18px;
+// %btn {
+// 	@include button;
+// 	@include transition(.3s);
+// }
+.me-btn--pri {
+	@include button($color-btn-pri, $outline: true);
+	&:hover {
+		@include prefix(animation, btnFxScale .5s);	
+	}
+}
+// Secondary Button
+.me-btn--alt {
+	@include button($color-btn-alt, $outline: true);
 }

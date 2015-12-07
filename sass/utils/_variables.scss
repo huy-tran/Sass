@@ -1,10 +1,16 @@
+// Font Stack in Vendors Folder
+@import '../vendors/font-stack';
+
 // Font
-$font-base: 16px;
+$font-heading: $merriweather-sans-font-stack;
+$font-body: $lato-font-stack;
+$heading-base: 5rem;
 
 // Color
-$color-layout-main: red;
+$color-bg: #fff;
 
 // Button Color
 $color-btn-pri: #65b9d3;
 $color-btn-alt: #c96142;
+$color-btn-active: #69d482;
 

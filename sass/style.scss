@@ -7,14 +7,15 @@
 *	Hey, here are my styles, my own styles !!!!
 *
 **************************************************************************/
+// Settings
+@import 'utils/settings';
 
 // Components
 @import 'components/buttons';
 
 // Utilities
+@import 'utils/variables';
 @import 'utils/functions';
 @import 'utils/helpers';
 @import 'utils/mixins';
-@import 'utils/variables';
-
 
