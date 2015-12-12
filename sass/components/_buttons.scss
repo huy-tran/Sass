@@ -4,17 +4,17 @@
 @import '../utils/helpers';
 @import '../utils/functions';
 
-// %btn {
-// 	@include button;
-// 	@include transition(.3s);
-// }
-.me-btn--pri {
-	@include button($color-btn-pri, $outline: true);
-	&:hover {
-		@include prefix(animation, btnFxScale .5s);	
-	}
+//----------------------------------------------------------
+// @mixin button($btn-color, $outline, $scale, $shadow)
+// $btn-color: color
+// $outline, $scale, $shadow: boolean
+//----------------------------------------------------------
+
+// Primary Button
+.me-btn-pri {
+	@include button($btn-color-pri, $shadow: true);
 }
 // Secondary Button
-.me-btn--alt {
-	@include button($color-btn-alt, $outline: true);
+.me-btn-alt {
+	@include button($btn-color-alt, true, true);
 }

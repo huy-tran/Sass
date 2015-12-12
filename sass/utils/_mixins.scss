@@ -50,29 +50,37 @@
 //-------------------------------------------------------
 // BUTTON MIXINS
 //-------------------------------------------------------
-@mixin button($color-btn, $outline: false) {
-	@include button-core($color-btn);
+@mixin button($btn-color, $outline: false, $scale: false, $shadow: false) {
+	@include button-core($btn-color);
 	@include transition(.3s);
 	@if $outline {
 		&:hover {
-			@include button-fx-outline($color-btn);
+			@include button-fx-outline($btn-color);
 		}
 	}
+	@if $scale {
+		&:hover {
+			@include prefix(animation, btnFxScale .5s);
+		}
+	}
+	@if $shadow {
+		@include button-3d($btn-color);
+	}
 }
-	@mixin button-core($color-btn, $color: #fff, $radius: 3px){
-		@include rem(font-size, 2rem);
+	@mixin button-core($btn-color, $btn-size: 2rem, $color: #fff, $radius: 3px){
+		@include rem(font-size, $btn-size);
 		@include rem(padding, 1rem 2rem);
 		@include rem(margin, 1rem);
 		border-radius: $radius;
 		font-family: $font-body;
-		color: $color;
-		background: $color-btn;
+		color: $btn-color-text;
+		background: $btn-color;
 		text-decoration: none;
 		outline: none;
 		border: none;
 		cursor: pointer;
 		&:active {
-			background: $color-btn-active;
+			background: darken($btn-color, 20%);
 		}
 	}
 	// Outline Button
@@ -98,4 +106,21 @@
 			transform: scale(.95, 1.05);
 		}
 	}
-
+	// 3D Button
+	@mixin button-3d($color) {
+		$shadow: darken($color, 10%);
+		$shadow-layer: lighten($color, 25%);
+		box-shadow: 0 ($btn-size * 0.25) 0 $shadow,
+					0 ($btn-size * 0.35) 0 ($btn-size * 0.2) $shadow-layer;
+		&:hover {
+			background: $btn-color-text;
+			color: $color;
+			box-shadow: 0 ($btn-size * 0.25) 0 darken($btn-color-text, 20%),
+						0 ($btn-size * 0.35) 0 ($btn-size * 0.2) $shadow-layer;
+		}
+		&:active {
+			@include prefix(transform, translateY($btn-size * 0.25));
+			box-shadow: 0 0 0 ($btn-size * 0.35) $shadow-layer;
+		}
+	}
+	
