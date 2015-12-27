@@ -50,77 +50,94 @@
 //-------------------------------------------------------
 // BUTTON MIXINS
 //-------------------------------------------------------
-@mixin button($btn-color, $outline: false, $scale: false, $shadow: false) {
-	@include button-core($btn-color);
+@mixin button-core($btn-color, $btn-size: 2rem, $color: #fff, $radius: 3px){
+	@include rem(font-size, $btn-size);
+	@include rem(padding, 1rem 2rem);
+	@include rem(margin, 1rem);
 	@include transition(.3s);
-	@if $outline {
-		&:hover {
-			@include button-fx-outline($btn-color);
-		}
+	border-radius: $radius;
+	font-family: $font-body;
+	color: $btn-color-text;
+	background: $btn-color;
+	text-decoration: none;
+	outline: none;
+	border: none;
+	cursor: pointer;
+}
+
+// @mixin button($btn-color, $outline: false, $scale: false, $shadow: false) {
+// 	@if $outline {
+// 		&:hover {
+// 			@include button-fx-outline($btn-color);
+// 		}
+// 	}
+// 	@if $scale {
+// 		&:hover {
+// 			@include prefix(animation, btnFxScale .5s);
+// 		}
+// 	}
+// 	@if $shadow {
+// 		@include button-3d($btn-color);
+// 	}
+// }
+
+// Outline Button
+@mixin button-fx-outline($color) {
+	box-shadow: 0 0 0 2px $color-bg, 0 0 0 4px $color;	
+}
+// Scale Button
+@include keyframes(btnFxScale) {
+	from, to {
+		-webkit-transform: scale(1, 1);
+		transform: scale(1, 1);
 	}
-	@if $scale {
-		&:hover {
-			@include prefix(animation, btnFxScale .5s);
-		}
+	25% {
+		-webkit-transform: scale(.9, 1.1);
+		transform: scale(.9, 1.1);
 	}
-	@if $shadow {
-		@include button-3d($btn-color);
+	50% {
+		-webkit-transform: scale(1.1, .9);
+		transform: scale(1.1, .9);
+	}
+	75% {
+		-webkit-transform: scale(.95, 1.05);
+		transform: scale(.95, 1.05);
 	}
 }
-	@mixin button-core($btn-color, $btn-size: 2rem, $color: #fff, $radius: 3px){
-		@include rem(font-size, $btn-size);
-		@include rem(padding, 1rem 2rem);
-		@include rem(margin, 1rem);
-		border-radius: $radius;
-		font-family: $font-body;
-		color: $btn-color-text;
-		background: $btn-color;
-		text-decoration: none;
-		outline: none;
-		border: none;
-		cursor: pointer;
-		&:active {
-			background: darken($btn-color, 20%);
-		}
+// 3D Button
+@mixin button-3d($color) {
+	$shadow: darken($color, 10%);
+	$shadow-layer: lighten($color, 25%);
+	box-shadow: 0 ($btn-size * 0.25) 0 $shadow,
+				0 ($btn-size * 0.35) 0 ($btn-size * 0.2) $shadow-layer;
+	&:hover {
+		background: darken($color, 5%);
 	}
-	// Outline Button
-	@mixin button-fx-outline($color) {
-		box-shadow: 0 0 0 2px $color-bg, 0 0 0 4px $color;	
+	&:active {
+		@include prefix(transform, translateY($btn-size * 0.25));
+		box-shadow: 0 0 0 ($btn-size * 0.35) $shadow-layer;
 	}
-	// Scale Button
-	@include keyframes(btnFxScale) {
-		from, to {
-			-webkit-transform: scale(1, 1);
-			transform: scale(1, 1);
-		}
-		25% {
-			-webkit-transform: scale(.9, 1.1);
-			transform: scale(.9, 1.1);
-		}
-		50% {
-			-webkit-transform: scale(1.1, .9);
-			transform: scale(1.1, .9);
-		}
-		75% {
-			-webkit-transform: scale(.95, 1.05);
-			transform: scale(.95, 1.05);
-		}
+}
+
+//-------------------------------------------------------
+// CENTER VERTICALLY AND/OR HORIZONTALLY AN ABSOLUTE POSITIONED ELEMENT
+//-------------------------------------------------------
+@mixin centerAbs($xy:xy){
+	@if $xy == xy {
+		left: 50%;
+		top: 50%;
+		bottom: auto;
+		right: auto;
+		@include prefix(transform, translateX(-50%) translateY(-50%));
 	}
-	// 3D Button
-	@mixin button-3d($color) {
-		$shadow: darken($color, 10%);
-		$shadow-layer: lighten($color, 25%);
-		box-shadow: 0 ($btn-size * 0.25) 0 $shadow,
-					0 ($btn-size * 0.35) 0 ($btn-size * 0.2) $shadow-layer;
-		&:hover {
-			background: $btn-color-text;
-			color: $color;
-			box-shadow: 0 ($btn-size * 0.25) 0 darken($btn-color-text, 20%),
-						0 ($btn-size * 0.35) 0 ($btn-size * 0.2) $shadow-layer;
-		}
-		&:active {
-			@include prefix(transform, translateY($btn-size * 0.25));
-			box-shadow: 0 0 0 ($btn-size * 0.35) $shadow-layer;
-		}
+	@else if $xy == x {
+		left: 50%;
+		right: auto;
+		@include prefix(transform, translateX(-50%));
 	}
-	
+	@else if $xy == y {
+		top: 50%;
+		bottom: auto;
+		@include prefix(transform, translateY(-50%));
+	}
+}
